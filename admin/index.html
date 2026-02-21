@@ -27,7 +27,16 @@
                     <input type="text" id="p-name" placeholder="Product Name" required>
                     <input type="number" id="p-price" placeholder="Price ($)" required>
                     <input type="number" id="p-stock" placeholder="Stock Quantity" required>
-                    <input type="text" id="p-category" placeholder="Category" required>
+                    <select id="p-category" required>
+                        <option value="" disabled selected>Select Category</option>
+                        <option value="beauty-hygiene">Beauty & Hygiene</option>
+                        <option value="fruit-vegetable">Fruit/Vegetable</option>
+                        <option value="grains-oil-masala">Grains, Oil and Masala</option>
+                        <option value="bakery">Bakery</option>
+                        <option value="beverages">Beverages</option>
+                        <option value="snacks">Snacks</option>
+                        <option value="kitchen">Kitchen</option>
+                    </select>
                 </div>
                 <textarea id="p-desc" placeholder="Product Description" rows="3"></textarea>
                 <input type="file" id="p-image" accept="image/*">

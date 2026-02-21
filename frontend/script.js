@@ -1,19 +1,36 @@
-const inventory = {
-    "Dairy, Bread & Eggs": [
-        { id: 1, name: "Amul Taaza Milk", qty: "500 ml", price: 28, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0Y6P2Xk4P-7V0nS1xL-pQ9UvJ8L8Z3xHw6A&s" },
-        { id: 2, name: "Amul Masti Curd", qty: "400 g", price: 35, img: "https://m.media-amazon.com/images/I/71Y0Yp-YtGL._SL1500_.jpg" },
-        { id: 3, name: "Brown Bread", qty: "400 g", price: 50, img: "https://m.media-amazon.com/images/I/61Nl-H6V+rL._SL1000_.jpg" }
-    ],
-    "Snacks & Munchies": [
-        { id: 1, name: "Lays Classic", qty: "50 g", price: 20, img: "https://m.media-amazon.com/images/I/71-081y+6uL._SL1500_.jpg" },
-        { id: 2, name: "Choco Dips", qty: "100 g", price: 40, img: "https://m.media-amazon.com/images/I/61CExB9zW4L._SL1100_.jpg" },
-        { id: 3, name: "Roasted Almonds", qty: "200 g", price: 250, img: "https://m.media-amazon.com/images/I/71V9XoN+WnL._SL1500_.jpg" }
-    ],
-    "Cold Drinks & Juices": [
-        { id: 1, name: "Coca Cola", qty: "750 ml", price: 45, img: "https://m.media-amazon.com/images/I/51v8ny526GL._SL1000_.jpg" },
-        { id: 1, name: "Real Orange Juice", qty: "1 L", price: 110, img: "https://m.media-amazon.com/images/I/71BvYv6iV9L._SL1500_.jpg" }
-    ]
-};
+
+let inventory = {};
+
+async function fetchProducts() {
+    try {
+        const response = await fetch('http://localhost:5000/api/data/product/all-products');
+        const data = await response.json();
+
+        if (data.type === "success") {
+            // Group products by category
+            inventory = data.products.reduce((acc, product) => {
+                const category = product.category.split("-").join(" ") || "General";
+                if (!acc[category]) {
+                    acc[category] = [];
+                }
+                acc[category].push({
+                    name: product.name,
+                    price: product.price,
+                    qty: product.stock,
+                    img: product.image || 'https://via.placeholder.com/150'
+                });
+                return acc;
+            }, {});
+
+            renderSmartMart();
+        }
+    } catch (error) {
+        console.error("Error fetching products:", error);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', fetchProducts);
+
 
 const sectionContainer = document.getElementById('category-sections');
 
@@ -24,7 +41,7 @@ function renderSmartMart() {
         html += `
             <section class="category-block">
                 <div class="category-header">
-                    <h2>${category}</h2>
+                    <h2 class="category-title">${category}</h2>
                     <a href="#" class="see-all">see all</a>
                 </div>
                 <div class="product-row">
@@ -37,7 +54,7 @@ function renderSmartMart() {
                             <div class="product-qty">${item.qty}</div>
                             <div class="price-box">
                                 <span class="price">₹${item.price}</span>
-                                <button class="add-btn" onclick="addtoCart()">ADD</button>
+                                <button class="add-btn">ADD</button>
                             </div>
                         </div>
                     `).join('')}
@@ -47,6 +64,44 @@ function renderSmartMart() {
         `;
     }
     sectionContainer.innerHTML = html;
+    const addButtons = document.querySelectorAll('.add-btn');
+    addButtons.forEach((button, index) => {
+        button.addEventListener('click', async () => {
+            // Find the product data associated with this button
+            const productCard = button.closest('.product-card');
+            const productName = productCard.querySelector('.product-name').textContent;
+            const productPrice = productCard.querySelector('.price').textContent.replace('₹', '');
+
+            const orderData = {
+                productName: productName,
+                price: productPrice,
+                quantity: 1,
+                // In a real app, you'd get the userId from local storage or session
+                userId: "guest_user"
+            };
+
+            try {
+                const response = await fetch('http://localhost:5000/api/data/order/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(orderData),
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    alert(`${productName} added to cart!`);
+                } else {
+                    alert('Failed to add product: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Error creating order:', error);
+                alert('Error connecting to server');
+            }
+        });
+    });
+
 }
 
 renderSmartMart();
