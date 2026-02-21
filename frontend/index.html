@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartMart</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo">Smart<span>mart</span></div>
+
+            <div class="location-picker">
+                <div class="loc-title">Your Location</div>
+                <div class="loc-detail">
+                    <span id="current-location">Select Address</span>
+                    <i class="fas fa-caret-down"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <i class="fas fa-search"></i>
+            <input type="text" id="main-search" placeholder="Search for groceries, snacks and more...">
+        </div>
+
+        <div class="nav-right">
+            <button class="login-btn">Login</button>
+            <button class="cart-btn">
+                <div class="cart-icon-box">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <div class="cart-text">
+                    <span id="cart-item-count">0 items</span>
+                    <span id="cart-total-price">₹0</span>
+                </div>
+            </button>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div id="category-sections"></div>
+    </main>
+
+    <script src="script.js"></script>
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-column">
+                <h3>Useful Links</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Security</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column categories-column">
+                <div class="category-header-inline">
+                    <h3>Categories</h3>
+                    <a href="#" class="see-all-green">see all</a>
+                </div>
+                <div class="category-lists">
+                    <ul>
+                        <li><a href="#">Daily Needs</a></li>
+                        <li><a href="#">Snacks & Munchies</a></li>
+                        <li><a href="#">Stationary Needs</a></li>
+                        <li><a href="#">Cold Drinks & Juices</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="#">Chocolates</a></li>
+                        <li><a href="#">Dairy & Breakfast</a></li>
+                        <li><a href="#">Instant Food</a></li>
+                        <li><a href="#">Personal Care</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="copyright">
+                © SmartMart Commerce Private Limited, 2024-2026
+            </div>
+
+            <div class="download-section">
+                <span>Download App</span>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Play Store">
+            </div>
+
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
