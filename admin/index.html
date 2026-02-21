@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="sidebar">
+        <h2>Admin Panel</h2>
+        <ul>
+            <li><a href="#upload-section">Upload Product</a></li>
+            <li><a href="#product-list-section">Product Inventory</a></li>
+            <li><a href="#order-section">Orders</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <section id="upload-section" class="card">
+            <h3>Upload New Product</h3>
+            <form id="product-form">
+                <div class="form-grid">
+                    <input type="text" id="p-name" placeholder="Product Name" required>
+                    <input type="number" id="p-price" placeholder="Price ($)" required>
+                    <input type="number" id="p-stock" placeholder="Stock Quantity" required>
+                    <input type="text" id="p-category" placeholder="Category" required>
+                </div>
+                <textarea id="p-desc" placeholder="Product Description" rows="3"></textarea>
+                <input type="file" id="p-image" accept="image/*">
+                <button type="submit" class="btn-primary">Save Product</button>
+            </form>
+        </section>
+
+        <section id="product-list-section" class="card">
+            <h3>Product Inventory</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Category</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="product-table-body">
+                    </tbody>
+            </table>
+        </section>
+
+        <section id="order-section" class="card">
+            <h3>Order Management</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="order-table-body">
+                    </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
