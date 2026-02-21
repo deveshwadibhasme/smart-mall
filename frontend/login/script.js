@@ -10,15 +10,32 @@ document.addEventListener('DOMContentLoaded', () => {
         togglePassword.textContent = type === 'password' ? 'Show' : 'Hide';
     });
 
-    // Handle Form Submission
-    loginForm.addEventListener('submit', (e) => {
+    loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         const email = document.getElementById('email').value;
         const password = passwordInput.value;
 
-        // For now, we'll just log it. In a real app, you'd send this to a server.
-        console.log("Login Attempt:", { email, password });
-        alert("Check the console to see your login data!");
+        try {
+            const response = await fetch('http://localhost:5000/api/auth/user/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.type === "success") {
+                localStorage.setItem('token', data.token);
+                window.location.href = '/frontend/index.html';
+            } else {
+                alert(data.message || "Login failed");
+            }
+        } catch (error) {
+            console.error("Login Error:", error);
+            alert("Error connecting to server");
+        }
     });
 });

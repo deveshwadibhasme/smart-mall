@@ -1,5 +1,5 @@
 // script.js
-document.getElementById('registrationForm').addEventListener('submit', function(e) {
+document.getElementById('registrationForm').addEventListener('submit', function (e) {
     e.preventDefault();
 
     // Collect values
@@ -11,12 +11,40 @@ document.getElementById('registrationForm').addEventListener('submit', function(
         city: document.getElementById('city').value
     };
 
-    // Log data to console (replace this with your API call)
-    console.log("Form Submitted Successfully:", formData);
+    const password = document.getElementById('password').value;
+
+    fetch('http://localhost:5000/api/auth/user/signup', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            number: formData.phone,
+            address: formData.address,
+            city: formData.city,
+            password: password
+        }),
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.type === "success") {
+                alert("Registration successful! Redirecting to login...");
+                window.location.href = '../login/index.html';
+            } else {
+                alert(data.message || "Registration failed");
+            }
+        })
+        .catch(error => {
+            console.error("Signup Error:", error);
+            alert("Error connecting to server");
+        });
+
 
     // Visual feedback
     alert(`Thank you, ${formData.name}! Your information has been received.`);
-    
+
     // Optional: Reset form
     // this.reset();
 });

@@ -1,4 +1,12 @@
 
+
+const token = localStorage.getItem('token');
+if (!token) {
+    window.location.href = '/frontend/login';
+}
+
+
+
 let inventory = {};
 
 async function fetchProducts() {
